@@ -20,7 +20,7 @@ namespace gyakorlas_2023_10_04
                 "if else"-el, majd switch-el
 
                 pl: Add meg a telefonszámod (06 utánit):
-             
+
 
             Console.WriteLine("Add meg a telefonszámod (06 utánit):");
             string telefonszam = Console.ReadLine();
@@ -57,7 +57,7 @@ namespace gyakorlas_2023_10_04
             {
                 Console.WriteLine("fej");
             }
-            
+
             //[0,99]
             //[0,100]
             //[0,49]
@@ -91,11 +91,11 @@ namespace gyakorlas_2023_10_04
             // [-15, -5]
             int random11 = r.Next(-15, -4);
 
-            
+
              Készítsen számkitalálós programot! A gép vélezlenszerűen generáljon ki egy számot
              1 és 6 között! A felhasználótól kérjen be egy tippet, és mondja meg ha sikerült
              eltalálnia, ha nem mondja meg mire gondolt a gép
-             
+
 
             Random r = new Random();
             int generaltSzam = r.Next(6) + 1; // r.Next(1,7);
@@ -106,7 +106,7 @@ namespace gyakorlas_2023_10_04
             else Console.WriteLine($"Nem találtad el. Amire én gondoltam az a {generaltSzam}");
 
 
-            
+
              Állítsuk elő véletlenszerűen egy egész számot az [1,10]-ból, és írjuk ki, hogy 
                 a szám páros-e vagy páratlan
              */
@@ -118,5 +118,4 @@ namespace gyakorlas_2023_10_04
         }
     }
 }
-
 ```
