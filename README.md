@@ -1,155 +1,105 @@
 ```c#
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace gyakorlas_2023_10_04
+// irjunk egy programot ami kikalkulálja hogy mennyi a százalék alapján az érdemjegy
+while (true)
 {
-    class Program
-    {
-        static void Main(string[] args)
-        {
+	Console.WriteLine("Add meg a százalékot és megmondom az érdemjegyet");
+	int szazalek = Convert.ToInt32(Console.ReadLine());
+	int erdemjegy = 1;
+	if (szazalek >= 86) erdemjegy = 5;
+	else if (szazalek >= 71) erdemjegy = 4;
+	else if (szazalek >= 56) erdemjegy = 3;
+	else if (szazalek >= 40) erdemjegy = 2;
+	else erdemjegy = 1;
 
-            /*
-             * Kérjen be egy telefonszámot
-                pl 30XXXXXXX
-                és csak akkor fogadja el, ha valóban mobilszám!
-                Írja ki hogy melyik szolgáltatóhoz tartozik
-                "if else"-el, majd switch-el
-
-                pl: Add meg a telefonszámod (06 utánit):
-             */
-
-            Console.WriteLine("Add meg a telefonszámod (06 utánit):");
-            string telefonszam = Console.ReadLine();
-            // valid-e a telefonszám
-            if (telefonszam.Length != 9) Console.WriteLine("Nem valid a megadott telefonszám");
-            else
-            {
-                // megvizsgáljuk hogy milyen szolgáltatóhoz tartozik a telefonszám
-                if (telefonszam[0].ToString() == "3") Console.WriteLine("Telekomos");
-                else if (Convert.ToInt32(telefonszam[0].ToString()) == 2) Console.WriteLine("Yettel");
-                else if (telefonszam[0] == '7') Console.WriteLine("Vodafon");
-                else Console.WriteLine("Nem ismerek ilyen szolgáltatót!");
-
-                switch (telefonszam[0].ToString())
-                {
-                    case "3": Console.WriteLine("Telekomos"); break;
-                    case "7": Console.WriteLine("Yetteles"); break;
-                    case "5": Console.WriteLine("Digis"); break;
-                    case "2": Console.WriteLine("Vodafonos"); break;
-                    default: Console.WriteLine("Nem ismerem ezt a szolgáltatót"); break;
-                }
-            }
-
-            // kérjen be egy számot a kozolról (1 vagy 0)
-            // fej=1 vagy írást=0
-            Console.WriteLine("Add meg az x értékét");
-            int x = Convert.ToInt32(Console.ReadLine());
-
-            if (x<1 && x>-1)// x==0
-            {
-                Console.WriteLine("írás");
-            }
-            else if(x<2 && x>0) // x==1
-            {
-                Console.WriteLine("fej");
-            }
-            
-            //RANDOM------------------------------------------------
-
-            Random rand1 = new Random();
-            // [0,5]
-            int random = rand1.Next(6);
-            // [0,100]
-            int random99 = rand1.Next(101);
-            // [0,99]
-            int random3 = rand1.Next(100);
-            // [1,6]
-            int random4 = rand1.Next(6)+1;
-            // [-50,50]
-            int random5 = rand1.Next(101)-50;
-            // [-100, 100]
-            int random6 = rand1.Next(201) - 100;
-            // [-15,-5]
-            int random7 = rand1.Next(11) - 15;
-
-            // next nem csak 1 paraméteres változata van
-            // hanem 2 paraméteres is
-            //  [-100, 100]
-            int random8 = rand1.Next(-100, 101);
-            // [0,5]
-            int random9 = rand1.Next(0, 6);
-            // [-50,50]
-            int random10 = rand1.Next(-50, 51);
-            // [-15, -5]
-            int random11 = rand1.Next(-15, -4);
-
-            /*
-             Készítsen számkitalálós programot! A gép vélezlenszerűen generáljon ki egy számot
-             1 és 6 között! A felhasználótól kérjen be egy tippet, és mondja meg ha sikerült
-             eltalálnia, ha nem mondja meg mire gondolt a gép
-             */
-
-            Random rand2 = new Random();
-            int generaltSzam = rand2.Next(6) + 1; // r.Next(1,7);
-            Console.WriteLine("Add meg a tippedet: ");
-            int tipp = Convert.ToInt32(Console.ReadLine());
-
-            if (generaltSzam == tipp) Console.WriteLine("Eltaláltad");
-            else Console.WriteLine($"Nem találtad el. Amire én gondoltam az a {generaltSzam}");
-
-
-            /*
-             Állítsuk elő véletlenszerűen egy egész számot az [1,10]-ból, és írjuk ki, hogy 
-                a szám páros-e vagy páratlan
-            */ 
-
-            Random rand3 = new Random();
-            int r1 = rand3.Next(2,51);
-            int r2 = rand3.Next(2,51);
-            int r3 = rand3.Next(2,51);
-            int r4= rand3.Next(2,51);
-            int r5 = rand3.Next(2,51);
-
-            Console.WriteLine($"Számok: {r1}, {r2}, {r3}, {r4}, {r5}");
-            Console.WriteLine($"összegük: {r1+r2+r3+r4+r5}");
-            Console.WriteLine($"Szorzat: {r1*r2*r3*r4*r5}");
-            Console.WriteLine($"átlag: {(r1+r2+r3+r4+r5)/5.0}");
-
-            /*
-                2 random számot [-20,-2] készítsünk és 
-                számoljuk ki az összegüket, kivonásukat, 
-                szorzatukat, hányadosukat
-             */
-
-            Random rand4 = new Random();
-            int random1 = rand4.Next(-20, -1);
-            int random2 = rand4.Next(-20, -1);
-            Console.WriteLine($"{random1} {random2}");
-            Console.WriteLine($"összegük: {random1+random2}");
-            Console.WriteLine($"kivonásuk: {random1-random2}");
-            Console.WriteLine($"szorzatuk: {random1*random2}");
-            Console.WriteLine($"szorzatuk: {random1 / Convert.ToDouble(random2)}");
-
-            /*
-             2 véletlen számot generáljunk [0,10] intervallumos tartományból, 
-            és írjuk ki a számokat a képernyőre, majd azt, hogy melyik szám a nagyobb!
-            Ha egyenlő, írjuk ki a  "A két szám egyenlő"
-             */
-
-            Random rand5 = new Random();
-            int r_1 = rand5.Next(11);
-            int r_2 = rand5.Next(11);
-            Console.WriteLine($"r_1= {r_1}, r_2= {r_2}");
-            // hármas operátorral is meglehet oldani
-            Console.WriteLine((r_1==r_2)?"A két szám egyenlő":(r_1>r_2)?$"{r_1} a nagyobb":$"{r_2} a nagyobb");
-
-            Console.ReadKey();
-        }
-    }
+	switch (erdemjegy)
+	{
+		case 5: Console.WriteLine("jeles (5)"); break;
+		case 4: Console.WriteLine("jó (4)"); break;
+		case 3: Console.WriteLine("közepes (3)"); break;
+		case 2: Console.WriteLine("elégséges (2)"); break;
+		case 1: Console.WriteLine("elégtelen (1)"); break;
+	}
 }
 
+//-Dolgozat feladatok átnézése---------------------------------------------------------------------------
+
+// 1 feladat
+Console.WriteLine("Add meg az z értékét");
+int z = Convert.ToInt32(Console.ReadLine());
+Console.WriteLine((z >= 0) ? "pozitív" : "negatív");
+
+// 2. feladat
+Console.WriteLine("Add meg az első számot");
+int szam1 = Convert.ToInt32(Console.ReadLine());
+Console.WriteLine("Add meg a második számot");
+int szam2 = Convert.ToInt32(Console.ReadLine());
+
+double osztas = (szam1 < szam2) ? szam1 / (double)szam2 : szam2 / (double)szam1;
+Console.WriteLine($"kissebbet a nagyobbal: {Math.Round(osztas, 3)}");
+
+// 3. feladat
+Console.WriteLine("add meg egy számot, és megmondom a 9. gyökét");
+int szam = Convert.ToInt32(Console.ReadLine());
+Console.WriteLine($"A(z) {szam} szám 9. gyöke: {Math.Pow(szam, 1.0 / 9.0):0.0000}");
+
+// 4. feladat
+Console.WriteLine("Add meg a trapéz \"a\" oldalának a hosszát");
+double a = Convert.ToDouble(Console.ReadLine());
+
+Console.WriteLine("Add meg a trapéz \"b\" oldalának a hosszát");
+double b = Convert.ToDouble(Console.ReadLine());
+
+Console.WriteLine("Add meg a trapéz \"c\" oldalának a hosszát");
+double c = Convert.ToDouble(Console.ReadLine());
+
+Console.WriteLine("Add meg a trapéz \"d\" oldalának a hosszát");
+double d = Convert.ToDouble(Console.ReadLine());
+
+Console.WriteLine("Add meg a trapéz \"a\" oldalához tartozó magasságot");
+double m = Convert.ToDouble(Console.ReadLine());
+
+double t = ((a + c) * m) / 2;
+double k = a + b + c + d;
+
+Console.WriteLine($"A trapéz területe: {t:0.00}");
+Console.WriteLine($"A trapéz kerülete: {k:0.00}");
+
+//--ismétlés------------------------------------------------------------
+
+/*
+ *Kérjen be egy telefonszámot
+   pl 30XXXXXXX
+   és csak akkor fogadja el, ha valóban mobilszám!
+   Írja ki hogy melyik szolgáltatóhoz tartozik
+	"if else" - el, majd switch-el
+
+	pl: Add meg a telefonszámod(06 utánit):
+ */
+
+Console.WriteLine("Add meg a telefonszámod a 06 utáni részt ");
+string teloszam = Console.ReadLine();
+if (teloszam.Length==9)
+{
+	// valid
+	if (teloszam[0] == '7') Console.WriteLine("Ez a szám vodafonos");
+	else if (teloszam[0] == '3') Console.WriteLine("Ez a szám telekomos");
+	else if (teloszam[0] == '2') Console.WriteLine("Ez a szám yetteles");
+	else if (teloszam[0] == '5') Console.WriteLine("Ez a szám digis");
+	
+}
+else  Console.WriteLine("kamu -_-");
+
+switch (teloszam.Length) {
+	case 9:
+		// valid
+		switch (teloszam[0])
+		{
+			case '2': Console.WriteLine("yettel"); break;
+			case '3': Console.WriteLine("telekom"); break;
+			case '7': Console.WriteLine("vodafon"); break;
+			case '5': Console.WriteLine("digi"); break;
+		}
+		break;
+	default: Console.WriteLine("kamu -_-"); break;
+}
 ```
