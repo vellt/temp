@@ -1,105 +1,106 @@
 ```c#
-// irjunk egy programot ami kikalkulálja hogy mennyi a százalék alapján az érdemjegy
-while (true)
-{
-	Console.WriteLine("Add meg a százalékot és megmondom az érdemjegyet");
-	int szazalek = Convert.ToInt32(Console.ReadLine());
-	int erdemjegy = 1;
-	if (szazalek >= 86) erdemjegy = 5;
-	else if (szazalek >= 71) erdemjegy = 4;
-	else if (szazalek >= 56) erdemjegy = 3;
-	else if (szazalek >= 40) erdemjegy = 2;
-	else erdemjegy = 1;
-
-	switch (erdemjegy)
-	{
-		case 5: Console.WriteLine("jeles (5)"); break;
-		case 4: Console.WriteLine("jó (4)"); break;
-		case 3: Console.WriteLine("közepes (3)"); break;
-		case 2: Console.WriteLine("elégséges (2)"); break;
-		case 1: Console.WriteLine("elégtelen (1)"); break;
-	}
-}
-
-//-Dolgozat feladatok átnézése---------------------------------------------------------------------------
-
-// 1 feladat
-Console.WriteLine("Add meg az z értékét");
-int z = Convert.ToInt32(Console.ReadLine());
-Console.WriteLine((z >= 0) ? "pozitív" : "negatív");
-
-// 2. feladat
-Console.WriteLine("Add meg az első számot");
-int szam1 = Convert.ToInt32(Console.ReadLine());
-Console.WriteLine("Add meg a második számot");
-int szam2 = Convert.ToInt32(Console.ReadLine());
-
-double osztas = (szam1 < szam2) ? szam1 / (double)szam2 : szam2 / (double)szam1;
-Console.WriteLine($"kissebbet a nagyobbal: {Math.Round(osztas, 3)}");
-
-// 3. feladat
-Console.WriteLine("add meg egy számot, és megmondom a 9. gyökét");
-int szam = Convert.ToInt32(Console.ReadLine());
-Console.WriteLine($"A(z) {szam} szám 9. gyöke: {Math.Pow(szam, 1.0 / 9.0):0.0000}");
-
-// 4. feladat
-Console.WriteLine("Add meg a trapéz \"a\" oldalának a hosszát");
-double a = Convert.ToDouble(Console.ReadLine());
-
-Console.WriteLine("Add meg a trapéz \"b\" oldalának a hosszát");
-double b = Convert.ToDouble(Console.ReadLine());
-
-Console.WriteLine("Add meg a trapéz \"c\" oldalának a hosszát");
-double c = Convert.ToDouble(Console.ReadLine());
-
-Console.WriteLine("Add meg a trapéz \"d\" oldalának a hosszát");
-double d = Convert.ToDouble(Console.ReadLine());
-
-Console.WriteLine("Add meg a trapéz \"a\" oldalához tartozó magasságot");
-double m = Convert.ToDouble(Console.ReadLine());
-
-double t = ((a + c) * m) / 2;
-double k = a + b + c + d;
-
-Console.WriteLine($"A trapéz területe: {t:0.00}");
-Console.WriteLine($"A trapéz kerülete: {k:0.00}");
-
-//--ismétlés------------------------------------------------------------
+Random random = new Random();
+// [0,8]
+int sz0 = random.Next(9);
+//[20,80]
+int sz1 = random.Next(61)+20;
+// [5,100]
+int sz2 = random.Next(96)+5;
+// [100,200]
+int sz3 = random.Next(101) + 100;
+// [-100,50]
+int sz4 = random.Next(151)-100;
+// [-70,1]
+int sz5 = random.Next(72)-70;
+// [-100,-30]
+int sz6 = random.Next(71)-100;
+// [-12, -3]
+int sz7 = random.Next(10)-12;
 
 /*
- *Kérjen be egy telefonszámot
-   pl 30XXXXXXX
-   és csak akkor fogadja el, ha valóban mobilszám!
-   Írja ki hogy melyik szolgáltatóhoz tartozik
-	"if else" - el, majd switch-el
-
-	pl: Add meg a telefonszámod(06 utánit):
+ 2 véletlen számot generáljunk [0,10], 
+és irjuk ki a számokat
+a képernyőre, majd azt hogy melyik szám a nagyobb, 
+plusz ha egyenlő azt is irjuk ki. 
  */
 
-Console.WriteLine("Add meg a telefonszámod a 06 utáni részt ");
-string teloszam = Console.ReadLine();
-if (teloszam.Length==9)
-{
-	// valid
-	if (teloszam[0] == '7') Console.WriteLine("Ez a szám vodafonos");
-	else if (teloszam[0] == '3') Console.WriteLine("Ez a szám telekomos");
-	else if (teloszam[0] == '2') Console.WriteLine("Ez a szám yetteles");
-	else if (teloszam[0] == '5') Console.WriteLine("Ez a szám digis");
-	
-}
-else  Console.WriteLine("kamu -_-");
+Random random1 = new Random();
+int num1 = random1.Next(11);
+int num2 = random1.Next(11);
+Console.WriteLine(num1);
+Console.WriteLine(num2);
+if (num1>num2) Console.WriteLine($"{num1} a nagyobb");
+else if (num2 > num1) Console.WriteLine($"{num2} a nagyobb");
+else Console.WriteLine("A két szám egyforma");
 
-switch (teloszam.Length) {
-	case 9:
-		// valid
-		switch (teloszam[0])
-		{
-			case '2': Console.WriteLine("yettel"); break;
-			case '3': Console.WriteLine("telekom"); break;
-			case '7': Console.WriteLine("vodafon"); break;
-			case '5': Console.WriteLine("digi"); break;
-		}
-		break;
-	default: Console.WriteLine("kamu -_-"); break;
+
+/*
+ Generálj random [1,10], ird ki az erdeményt, 
+és döntsd el hogy a kapott szám az páros vagy páratlan
+ */
+
+Random random2 = new Random();
+int num3 = random2.Next(10) +1;
+if (num3 % 2 == 0) Console.WriteLine($"A(z) {num3} páros");
+else Console.WriteLine($"A(z) {num3} páratlan");
+
+
+/*
+ kő, papír, olló játék-->6%, viszont aki 9sor alatt megoldja, az 5-ös
+1-->kő
+2-->papír
+3-->olló
+
+generáljon gép [1,3] között random számot
+kérjen be a felh-tól is [1,3] között egy számot
+ki is kell íratni, hogy ki mit választott SZÖVEGESEN
+
+a logikát irjuk meg if else-ben vagy a hármas operandussal
+ */
+
+// egy lehetséges megoldás:
+Random random10 = new Random();
+int gepSzam = random10.Next(3) + 1;
+Console.WriteLine("Adj egy számot (1-3)[kő, papír, olló]");
+int felhSzam = Convert.ToInt32(Console.ReadLine());
+// kiíratom a gép mire gondolt
+Console.Write("Gép: ");
+switch (gepSzam)
+{
+	case 1: Console.WriteLine("KŐ"); break;
+	case 2: Console.WriteLine("Papír"); break;
+	case 3: Console.WriteLine("Olló"); break;
+}
+// kiíratom, hogy a felh. mire gondolt
+Console.Write("Felh: ");
+switch (felhSzam)
+{
+	case 1: Console.WriteLine("KŐ"); break;
+	case 2: Console.WriteLine("Papír"); break;
+	case 3: Console.WriteLine("Olló"); break;
+}
+
+if (gepSzam == felhSzam) Console.WriteLine("Döntetlen");
+else if (gepSzam == 1 && felhSzam == 3
+	|| gepSzam == 2 && felhSzam == 1
+	|| gepSzam == 3 && felhSzam == 2
+	) Console.WriteLine("gép győzött");
+else Console.WriteLine("én nyertem");
+
+/*
+ a, b, c oldal generáljuk le [10,80], szerkeszthető hármoszög-e
+mikor? Amikor ezek igazak: (a+b>c) és (a+c>b) és (b+c>a)
+ */
+
+Random random3 = new Random();
+int a = random3.Next(71) + 10;
+int b = random3.Next(71) + 10;
+int c = random3.Next(71) + 10;
+
+if((a + b > c)  &&(a + c > b) &&(b + c > a)){
+	Console.WriteLine("igen");
+}else
+{
+	Console.WriteLine("nem");
 }
 ```
