@@ -1,125 +1,105 @@
 ```c#
-string fanta = "fanta";
-string cola = "cola";
-string ures = "ures";
-ures = fanta;
-fanta = cola;
-cola = ures;
-
-
-// szám csere
-int sz1 = 5;
-int sz2 = 10;
-int ures1 = 0;
-ures1 = sz1;
-sz1 = sz2; // 10
-sz2 = ures1; // 5
-
-/* 
- * kérd be az 'a' értéket és a 'b' értéket a felh-tól, és 
- * Íratsd őket ki, majd cseréld meg az értéküket, és megint
- * íratsd ki az 'a' és a 'b' változót
- */
-
-Console.WriteLine("Add meg az 'a' értékét:");
-int a = Convert.ToInt32(Console.ReadLine());
-
-Console.WriteLine("Add meg az 'b' értékét:");
-int b = Convert.ToInt32(Console.ReadLine());
-
-Console.WriteLine($"Az a={a}, b={b}");
-
-int temp = a;
-a = b;
-b = temp;
-
-Console.WriteLine($"Az a={a}, b={b}");
-
-/*
- legyen 3 változó
-szam1, szam2, szam3
-pl ezekkel az értékekkel
-sza1=5;
-sza2=4;
-szam3=3;
-
-ezt kell úgy átcserélgetni, hogy növekvő sorrenbe kerüljön
- */
+// random
 Random r = new Random();
-int szam1 = r.Next(31) + 20; //[20,50]
-int szam2 = r.Next(31) + 20;
-int szam3 = r.Next(31) + 20;
+int sz = r.Next(9); //[0,8]
+// [2,8]
+int sz1 = r.Next(7)+2;
+// [3,5]
+int sz2 = r.Next(3)+3;
+// [-2,5]
+int sz3 = r.Next(8)-2;
+// [-10, 10]
+int sz4 = r.Next(21)-10;
+// [-20,-4]
+int sz5 = r.Next(17)-20;
+// [-10,-2]
+int sz6 = r.Next(9)-10;
+
+// generáljunk 3 random számot [-100, 50],
+// majd írja ki értéküket
+
+Random r2 = new Random();
+int szam1 = r2.Next(151)-100;
+int szam2 = r2.Next(151)-100;
+int szam3 = r2.Next(151)-100;
+Console.WriteLine($"{szam1} {szam2} {szam3}");
+
+// megcserélni a szam2 értéket a szám3-al
+// és irjuk ki újra mind a 3 értékét
+int temp = szam2;
+szam2 = szam3;
+szam3 = temp;
+Console.WriteLine($"{szam1} {szam2} {szam3}");
+
+// megnézzük, hogyan lehet számokat növekvő sorrendbe
+// cserélgetni
+
+
 Console.WriteLine($"{szam1} {szam2} {szam3}");
 if (szam1 > szam2)
 {
-	int temp1 = szam1;
+	int temp2 = szam1;
 	szam1 = szam2;
-	szam2 = temp1;
+	szam2 = temp2;
 }
-if(szam1 > szam3)
+if (szam1 > szam3)
 {
-	int temp1 = szam1;
+	int temp2 = szam1;
 	szam1 = szam3;
-	szam3 = temp1;
+	szam3 = temp2;
 }
 if (szam2 > szam3)
 {
-	int temp1 = szam2;
+	int temp2 = szam2;
 	szam2 = szam3;
-	szam3 = temp1;
-} 
+	szam3 = temp2;
+}
 Console.WriteLine($"{szam1} {szam2} {szam3}");
 
-/*
- 3 random szám [5,10]
-statisztika:
-- mennyi páros
-- mennyi páratlan
-- mennyi az átlaguk
-- mennyi az összegük
-- rendezzük sorba őket
-- mi a max érték
-- mi a min érték
- */
-Random r1 = new Random();
-int s1 = r1.Next(6) + 5;
-int s2 = r1.Next(6) + 5;
-int s3 = r1.Next(6) + 5;
-Console.WriteLine("Statisztika");
-Console.WriteLine($" {s1} {s2} {s3}");
-int parosSzamlalo = 0;
-int paratlanSzamlalo = 0;
-if (s1 % 2 == 0) parosSzamlalo++;
-else paratlanSzamlalo++;
-if (s2 % 2 == 0) parosSzamlalo++;
-else paratlanSzamlalo++;
-if (s3 % 2 == 0) parosSzamlalo++;
-else paratlanSzamlalo++;
-Console.WriteLine($"páros számok: {parosSzamlalo} db");
-Console.WriteLine($"páratlan számok: {paratlanSzamlalo} db");
-Console.WriteLine($"összegük: {s1 + s2 + s3} db");
-// növekvő sorba rendezés
-int tempV = 0;
-if (s1 > s2)
+// most már tudjuk hogy melyik a legnagyobb és melyik a legkissebb
+// írjuk ki őket
+
+Console.WriteLine($"Legnagyobb: {szam3}");
+Console.WriteLine($"Legkissebb: {szam1}");
+
+//----------------------------------------------------------------
+// CIKLUSOK (elöl és hátul tesztelős)
+// WHILE, elöl tesztelős, akkor fut le has a feltétel igaz
+// és addig fut AMÍG a feltétel igaz
+
+int szam = 6;
+
+
+while (szam < 8)
 {
-	tempV = s1;
-	s1 = s2;
-	s2 = temp;
+	Console.WriteLine("A feltétel igaz");
 }
-if(s1 > s3)
+
+// DO-WHILE, hátul tesztelős, mindenféleképpen lefut egyszer,
+// utánna viszont addig fut, AMÍG a feltétel igaz
+
+do
 {
-	tempV = s1;
-	s1 = s3;
-	s3 = tempV;
-}
-if (s2 > s3)
+	Console.WriteLine("A feltétel igaz");
+} while (szam<3);
+
+
+// hozzunk létre egy ciklusváltozót amit
+// a ciklusmagban folyamatosan növeljük
+// eglészen addig míg a szám el nem éri a 10-et
+
+int ciklusvaltozo = 0;
+while (ciklusvaltozo < 10)
 {
-	tempV = s2;
-	s2 = s3;
-	s3 = s2;
+	ciklusvaltozo++;
+	Console.WriteLine(ciklusvaltozo);
 }
-Console.WriteLine($" {s1} {s2} {s3}");
-Console.WriteLine($"Max: {s3}");
-Console.WriteLine($"Min: {s1}");
-Console.WriteLine($"átlaguk: {(s1+s2+s3)/3.0}");
+
+// végezzünk egy kiíratást 5-10ig
+int ciklusvaltozo2 = 4;
+while (ciklusvaltozo2 < 10)
+{
+	ciklusvaltozo2++;
+	Console.WriteLine(ciklusvaltozo2);
+}
 ```
