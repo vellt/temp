@@ -1,237 +1,178 @@
 ```c#
-/*
-	összetett logikai kifejezések
-	if struktúra átalakítható-e switch-é
-	egy paraméteres random, azokkal való művelet
-	3 vagy több elem növekvő/csökkenő sorrendbe való cserélgetése
-	while, do while ciklusok
- */
-// növekvő sorrendbe rendezés
-int a = 76;
-int b = -6;
-int c = 5;
-Console.WriteLine($"{a} {b} {c}");
-if (a > b)
+Random random = new Random();
+int sz = random.Next(10);//[0,9]
+// [20,50]
+int sz1 = random.Next(31)+20;
+// [30,35]
+int sz2 = random.Next(6)+30;
+// [-5,5]
+int sz3 = random.Next(11)-5;
+// [-10,2]
+int sz4 = random.Next(13)-10;
+// [-10,-5]
+int sz5 = random.Next(6)-10;
+// [-30,-15]
+int sz6 = random.Next(16)-30;
+
+// képezzünk 3 random számot [-30, 50]
+// írassuk ki a változók kezdeti értékét
+// cserélgessük csökkenő sorrendbe
+// majd megint írjuk ki a változók értékeit
+
+// mondjuk meg a legnagyobb és a legkisebb különbségét
+// mennyi ennek a különbségnek az abs
+// a legkisebbet osszuk el a legnagyobbal !2 tizedes!
+
+Random random1 = new Random();
+int szam1 = random1.Next(81)-30;
+int szam2 = random1.Next(81)-30;
+int szam3 = random1.Next(81)-30;
+
+Console.WriteLine($"{szam1} {szam2} {szam3}");
+
+if (szam1 < szam2)
 {
-	int temp = a;
-	a = b;
-	b = temp;
+	int temp = szam1;
+	szam1 = szam2;
+	szam2 = temp;
 }
-if (a > c)
+if (szam1 < szam3)
 {
-	int temp = a;
-	a = c;
-	c = temp;
+	int temp = szam1;
+	szam1 = szam3;
+	szam3 = temp;
 }
-if (b > c)
+if (szam2 < szam3)
 {
-	int temp = c;
-	c = b;
-	b = temp;
-}
-Console.WriteLine($"{a} {b} {c}");
-
-// while ciklus
-
-//10-1 ig csökkenő sorrendben listázzuk ki a számokat
-
-int szam = 10;
-while (szam>=1)
-{
-	Console.WriteLine(szam);
-	szam--;
+	int temp = szam2;
+	szam2 = szam3;
+	szam3 = temp;
 }
 
+Console.WriteLine($"{szam1} {szam2} {szam3}");
 
-//1-20ig az összes páratlan
-int szam1 = 1;
-while (szam1<=20)
+
+// mondjuk meg a legnagyobb és a legkisebb különbségét
+int kulonbseg = szam1 - szam3;
+Console.WriteLine(kulonbseg);
+
+// mennyi ennek a különbségnek az abs
+if (kulonbseg < 0)
 {
-	if(szam1%2!=0)
+	Console.WriteLine(kulonbseg*-1);
+}
+else
+{
+	Console.WriteLine(kulonbseg);
+}
+
+// a legkisebb/legnagyobb-->2tizedes
+Console.WriteLine(Math.Round((szam1/Convert.ToDouble(szam3)),2));
+
+// ciklusok--------------------------------
+
+// while ciklussal
+// a felh-tól kérjunk be 2 számot (x,y), az x-nek kisebbnek kell
+// lennie az y-tól
+// x-től y-ig ki kell listázni páros számokat
+
+Console.WriteLine("Add meg az x értékét");
+int x = Convert.ToInt32(Console.ReadLine());
+
+Console.WriteLine("Add meg az y értékét");
+int y = Convert.ToInt32(Console.ReadLine());
+
+while (x!=y+1)
+{
+	Console.WriteLine(x);
+	x++;
+}
+
+//készítsünk egy programot, amely 15 db '*'-ot ír ki a 
+// képernyőre egymás mellé!!
+int szamlalo = 0;
+while (szamlalo<15)
+{
+	szamlalo++;
+	Console.Write("*");
+}
+
+// Írassuk ki a számokat 1-től 20ig, és azok négyzetét
+// 2-->4
+// 3-->9
+
+int szamlalo1 = 1;
+
+while (szamlalo1<=20)
+{
+	Console.WriteLine($"{szamlalo1}-->{szamlalo1*szamlalo1}");
+	szamlalo1++;
+}
+
+
+// Írassa ki 99-től 1-ig csökkenő sorrendben az összes pozitív, 3-al
+// osztható egész számot
+int valtozo = 99;
+while(valtozo!=0)
+{
+	if(valtozo%2==0 && valtozo%3==0)
 	{
-		Console.WriteLine(szam1);
+		Console.WriteLine(valtozo);
 	}
-	szam1++;
+	valtozo--;
 }
 
-// 1-20ig az összes 5el osztható
-int szam2 = 1;
-while (szam2 <= 20)
-{
-	if (szam2 % 5 == 0)
-	{
-		Console.WriteLine(szam2);
-	}
-	szam2++;
-}
-
-// 1-20ig az összes páros számot, ami egyben 5el is osztható
-int szam3 = 1;
-while (szam3 <= 20)
-{
-	if ((szam3 % 5 == 0) && (szam3 % 2 == 0))
-	{
-		Console.WriteLine(szam3);
-	}
-	szam3++;
-}
-
-// kérjen be a felh-tól egy számmot, és adja folyamatosan össze, amíg a felhasználó
-// nem ad be a konzolról 0-t
-
-// while ciklus elöl tesztel
-// do while ciklus hátul tesztel, itt feltételtöl függetlenül lefut 1x a program
-int osszeguk = 0;
-int felh = 1;
+// kérjen be folyamatosan számokat mindaddig mig 0-t nem adunk meg
+// ekkor irja ki, hogy "elég", és megáll
+int felh = -1;
 
 while (felh!=0)
 {
-	Console.Write("Add meg az új számot: ");
+	Console.WriteLine("Adj meg egy szamot");
 	felh = Convert.ToInt32(Console.ReadLine());
-	osszeguk = osszeguk + felh;
-}
-
-osszeguk = 0;
-felh = 0;
-do
-{
-	Console.Write("Add meg az új számot: ");
-	felh = Convert.ToInt32(Console.ReadLine());
-	osszeguk = osszeguk + felh;
-} while (felh!=0);
-
-// készítsünk egy faktoriális számláló alkalmazást
-// 4! -->4*3*2*1
-// 3! -->3*2*1
-int aminekSzeretnenkAFaktorialisat = 4;
-int faktorialisOsszeg = aminekSzeretnenkAFaktorialisat;
-
-while (aminekSzeretnenkAFaktorialisat>=2)
-{
-	aminekSzeretnenkAFaktorialisat--;
-	faktorialisOsszeg = faktorialisOsszeg * aminekSzeretnenkAFaktorialisat;
-}
-Console.WriteLine($"A 4! ={faktorialisOsszeg}");
-
-// (5ért)--> Írja ki az első N db prímszámot, N--> az amit a felhasználó ad meg
-
-
-// if struktúra átalakítható-e switch szerkezetté
-// az alakítható át, ami "if, else if, else" vagy "if, else" láncolatot követ
-// egy adott értéket hasonlít össze több konstanssal és nem pedig változóval
-// logikai operátora szigorúan ==
-// if, else if--> case
-// else --> default
-
-int x = 7;
-int y = 8;
-int z = 10;
-if (x == y)
-{
-	Console.WriteLine("x és y egyenlőek");
-}else if (x == z)
-{
-	Console.WriteLine("x és z egyenlőek");
-}else
-{
-	Console.WriteLine("x nem egyenlő y-al sem pedig z-vel");
-}
-// nem alakítható át, mert az x változót y illetve z változóval hasinlítom össze
-switch (x)
-{
-	case y:
-		Console.WriteLine("x és y egyenlőek");
-		break;
-	case z:
-		Console.WriteLine("x és z egyenlőek");
-		break;
-	default:
-		Console.WriteLine("x nem egyenlő y-al sem pedig z-vel");
-		break;
+	if (felh == 0)
+	{
+		Console.WriteLine("elég");
+	}
 }
 
 
-int x2 = 7;
-int y2 = 8;
-int z2 = 10;
-if (x2 == 8)
+// Számolja ki az éves középhőmérsékletet miután a felh. megadta
+// a havi középhőmrésékleteket.
+
+int honap = 1;
+int osszHomerseklet = 0;
+while (honap!=13)
 {
-	Console.WriteLine("x és y egyenlőek");
+	int honapHomerseklete = Convert.ToInt32(Console.ReadLine());
+	osszHomerseklet = osszHomerseklet + honapHomerseklete;
+	honap++;
 }
-else if (x2 == 10)
+Console.WriteLine($"Az éves középhőmérséklet: {osszHomerseklet/12.0}");
+
+// döntsük el egy számról, hogy prímszám-e
+int osztoDarabSzam = 0;
+int primE = 5;
+int amivelOsztunk = primE;
+while (amivelOsztunk!=0)
 {
-	Console.WriteLine("x és z egyenlőek");
+	if (primE % amivelOsztunk == 0)
+	{
+		// ez egy osztója
+		osztoDarabSzam++;
+	}
+	amivelOsztunk--;
+}
+if (osztoDarabSzam == 2)
+{
+	Console.WriteLine("a szám prim");
 }
 else
 {
-	Console.WriteLine("x nem egyenlő y-al sem pedig z-vel");
-}
-// átalakítható, mert a case eseteknél csak konstans lehet,
-switch (x)
-{
-	case 8:
-		Console.WriteLine("x és y egyenlőek");
-		break;
-	case 10:
-		Console.WriteLine("x és z egyenlőek");
-		break;
-	default:
-		Console.WriteLine("x nem egyenlő y-al sem pedig z-vel");
-		break;
+	Console.WriteLine("nem prim");
 }
 
 
-// átalakítható-e
-
-int vegossszeg = 10_000;
-string kedvezmeny = "10%";
-if (kedvezmeny == "10%")
-{
-	Console.WriteLine($"A kedvezmenyes végösszeg: {vegossszeg*0.9}");
-}else if (kedvezmeny == "50%")
-{
-	Console.WriteLine($"A kedvezmenyes végösszeg: {vegossszeg * 0.5}");
-}
-else if (kedvezmeny == "60%")
-{
-	Console.WriteLine($"A kedvezmenyes végösszeg: {vegossszeg * 0.4}");
-}
-else
-{
-	Console.WriteLine($"Nállunk nics ilyen kedvezmeny");
-}
-// átalakítható
-switch (kedvezmeny)
-{
-	case "10%":
-		Console.WriteLine($"A kedvezmenyes végösszeg: {vegossszeg * 0.9}");
-		break;
-	case "50%":
-		Console.WriteLine($"A kedvezmenyes végösszeg: {vegossszeg * 0.5}");
-		break;
-	case "60%":
-		Console.WriteLine($"A kedvezmenyes végösszeg: {vegossszeg * 0.4}");
-		break;
-	default:
-		Console.WriteLine($"Nállunk nics ilyen kedvezmeny");
-		break;
-}
-
-
-//átalakítható?
-int ora = 12;
-int perc = 30;
-if(ora==10 && perc == 30)
-{
-	Console.WriteLine("Még van 2 órám kezésig");
-}else if (ora == 12)
-{
-	Console.WriteLine("Még van fél órám a kezdésig");
-}else
-{
-	Console.WriteLine("Elkéstem");
-}
-// az első feltétel "ora==10 && perc == 30" miatt nem alakítható át
 
 Console.ReadKey();
 ```
