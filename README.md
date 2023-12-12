@@ -1,63 +1,8 @@
 ```c#
-/*
-a gép generáljon random számot [1,100]
-majd kérjen be a felhasználótól egy számot (tipp)
-és mondja meg, hogy a gép által gondolt szám a tipptől nagyobb vagy 
-kisebb! A tippelés addig megy, amíg a felh. el nem találja
-a gép számát
- */
-
-// plusz feladat: számoljuk meg hány
-// lépéssel tudta kitalálni a gép átla generált számot
-
-Random random = new Random();
-int gep = random.Next(100)+1;
-int felh = 0;
-int szamlalo = 0;
-while (gep!=felh)
-{
-	felh = Convert.ToInt32(Console.ReadLine());
-	szamlalo++;
-	if (felh < gep)
-	{
-		Console.WriteLine("nagyobb számra gondoltam");
-	}else if(felh > gep)
-	{
-		Console.WriteLine("kisebb számra gondoltam");
-	}
-}
-Console.WriteLine($"eltaláltad, ennyi lépés számmal sikerült: {szamlalo}");
-
-// for ciklus-->előírt lépésszámú ciklus
-/*
-for (int i = 0; i < length; i++)
-{
-
-}*/
-
-// 5 random számot generáljunk-->[0,50] for cikussal
-for (int i = 1; i <= 5; i++)
-{
-	int szam = random.Next(51);
-	Console.Write($"{szam} ");
-}
-
-// 40 random szám [-100,100]
-// írjuk ki egymás mellé szóközökkel elválasztva a számokat
-// minden 8.-nál törjön sort
-for (int i = 1; i <= 40; i++)
-{
-	int szam = random.Next(201)-100;
-	Console.Write($"{szam} ");
-	if (i % 8 == 0) Console.WriteLine();
-}
-
-// OKTATÓPROGRAM
-// összeadást kivonást gyakoroltatja
-// 10 feladatot adjuk a felh-nak
-// egész számokat álklítsunk elő véletlenszerűen [-5,15]
-// minden páros ciklusváltozó az összeadást gyakoroltatja
-// minden páratlan ciklusváltozó a kivonást gyakoroltatja
+ // OKTATÓPROGRAM
+// összeadást kivonást szorzást osztást gyakoroltatja véletlenszerűen
+// 5 feladatot adjuk a felh-nak
+// egész számokat álklítsunk elő véletlenszerűen [1,9]
 // minden egyes helyes megoldás 1 pontot ért, összesen 10 pont
 // szerezhető
 // 0-2 elégtelen
@@ -65,4 +10,70 @@ for (int i = 1; i <= 40; i++)
 // 5-6 közepes
 // 7-8 jó
 // 9-10 jeles
+Random random = new Random();
+int pontszam = 0;
+int feladatokSzama = Convert.ToInt32(Console.ReadLine());
+for (int i = 1; i <= feladatokSzama; i++)
+{
+	int szam1 = random.Next(9) + 1;
+	int szam2 = random.Next(9) + 1;
+	int op = random.Next(4);
+	double valasz = 0;
+	switch (op)
+	{
+		case 0:
+			Console.Write($"{szam1} + {szam2} = ");
+			valasz = Convert.ToDouble(Console.ReadLine());
+			if (valasz == szam1 + szam2) pontszam++;
+			break;
+		case 1:
+			Console.Write($"{szam1} - {szam2} = ");
+			valasz = Convert.ToDouble(Console.ReadLine());
+			if (valasz == szam1 - szam2) pontszam++;
+			break;
+		case 2:
+			Console.Write($"{szam1} * {szam2} = ");
+			valasz = Convert.ToDouble(Console.ReadLine());
+			if (valasz == szam1 * szam2) pontszam++;
+			break;
+		case 3:
+			Console.Write($"{szam1} / {szam2} = ");
+			valasz = Convert.ToDouble(Console.ReadLine());
+			if (valasz == (double)szam1 / szam2) pontszam++;
+			break;
+		default:
+			Console.WriteLine("ez sose fut le");
+			break;
+	}
+}
+Console.WriteLine($"pontok: {pontszam}/{feladatokSzama}");
+if (pontszam <= 2)
+{
+	Console.WriteLine("Elégtelen");
+}
+else if (pontszam <= 4)
+{
+	Console.WriteLine("Elégséges");
+}
+else if (pontszam <= 6)
+{
+	Console.WriteLine("Közepes");
+}
+else if (pontszam <= 8)
+{
+	Console.WriteLine("jó");
+}
+else
+{
+	Console.WriteLine("jeles");
+}
+
+// tizes szorzótábla
+
+for (int i = 1; i <= 10; i++)
+{
+	Console.WriteLine($"{i}x10={i * 10}");
+}
+
+Console.ReadKey();
 ```
