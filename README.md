@@ -1,79 +1,136 @@
 ```c#
- // OKTATÓPROGRAM
-// összeadást kivonást szorzást osztást gyakoroltatja véletlenszerűen
-// 5 feladatot adjuk a felh-nak
-// egész számokat álklítsunk elő véletlenszerűen [1,9]
-// minden egyes helyes megoldás 1 pontot ért, összesen 10 pont
-// szerezhető
-// 0-2 elégtelen
-// 3-4 elégséges
-// 5-6 közepes
-// 7-8 jó
-// 9-10 jeles
-Random random = new Random();
-int pontszam = 0;
-int feladatokSzama = Convert.ToInt32(Console.ReadLine());
-for (int i = 1; i <= feladatokSzama; i++)
+// printeljük ki, mit látunk?
+int sz1 = 65;
+int sz2 = 76;
+int sz3 = 77;
+int sz4 = 65;
+Console.WriteLine($"{sz1} {sz2} {sz3} {sz4}");
+
+// és most?
+Console.WriteLine($"{(char)sz1} {(char)sz2} {(char)sz3} {(char)sz4}");
+
+// alakítsuk nagybetűssé az "x, y, z"-t pl--> X, Y, Z
+Console.WriteLine($"{'x' - 32} {'y' - 32} {'z' - 32}");
+
+
+// írassuk ki az a,b,c betűit egymás alá
+for (int i = 97; i <= 122; i++)
 {
-	int szam1 = random.Next(9) + 1;
-	int szam2 = random.Next(9) + 1;
-	int op = random.Next(4);
-	double valasz = 0;
-	switch (op)
+	Console.WriteLine($"{i}-->{(char)(i-32)}");
+}
+
+// szöveg mint tömb-------------------------------------------------
+string beka = "beka";
+Console.WriteLine(beka.Length); // szöveg hossza
+Console.WriteLine(beka[0]); // szöveg első eleme (első karakter)
+Console.WriteLine((int)beka[0]); // a szöveg első elemének az ASCII kódja (azonosítója)
+
+// készítsen egy programot ami bekér egy szöveget,
+// és minden második karakterést írja csak ki
+Console.WriteLine("adj meg egy szöveget");
+string szoveg = Console.ReadLine();
+for (int i = 1; i < szoveg.Length; i+=2) // kettesével léptetem
+{
+	Console.Write(szoveg[i]);
+}
+Console.WriteLine();
+
+// minden 5. karaktert írjunk csak ki
+Console.WriteLine("adj meg egy szöveget");
+string szoveg2 = Console.ReadLine();
+for (int i = 5; i < szoveg2.Length; i += 5)
+{
+	Console.Write(szoveg2[i]);
+}
+Console.WriteLine();
+
+// a bekért szöveget fordított sorrendben
+Console.WriteLine("adj meg egy szöveget");
+string sz= Console.ReadLine();
+for (int i = sz.Length-1; i >=0; i--)
+{
+	Console.WriteLine(sz[i]);
+}
+Console.WriteLine();
+
+// van-e t betű a bekért szövegben
+Console.WriteLine("add meg a szöveget és megmondom, hogy van-e benne t");
+string vlmi = Console.ReadLine();
+int szamlalo = 0;
+for (int i = 0; i < vlmi.Length; i++)
+{
+	if (vlmi[i] == 't')
 	{
-		case 0:
-			Console.Write($"{szam1} + {szam2} = ");
-			valasz = Convert.ToDouble(Console.ReadLine());
-			if (valasz == szam1 + szam2) pontszam++;
-			break;
-		case 1:
-			Console.Write($"{szam1} - {szam2} = ");
-			valasz = Convert.ToDouble(Console.ReadLine());
-			if (valasz == szam1 - szam2) pontszam++;
-			break;
-		case 2:
-			Console.Write($"{szam1} * {szam2} = ");
-			valasz = Convert.ToDouble(Console.ReadLine());
-			if (valasz == szam1 * szam2) pontszam++;
-			break;
-		case 3:
-			Console.Write($"{szam1} / {szam2} = ");
-			valasz = Convert.ToDouble(Console.ReadLine());
-			if (valasz == (double)szam1 / szam2) pontszam++;
-			break;
-		default:
-			Console.WriteLine("ez sose fut le");
-			break;
+		szamlalo++;
 	}
 }
-Console.WriteLine($"pontok: {pontszam}/{feladatokSzama}");
-if (pontszam <= 2)
+if(szamlalo>0) Console.WriteLine("van t betű");
+
+// ----------------------------------------------------------
+// (kis érdekesség)
+// konstansok típusa futásidőben
+Console.WriteLine("6".GetType());
+Console.WriteLine('6'.GetType());
+Console.WriteLine(6.GetType());
+Console.WriteLine(6.0.GetType());
+// ----------------------------------------------------------
+
+// kérjünk be egy hosszú
+// szöveget és az utolsó 5 karakterét írjuk ki
+Console.WriteLine("adj meg egy hosszú szöveget");
+string hosszuSzoveg = Console.ReadLine();
+for (int i = (hosszuSzoveg.Length-1)-5; i < hosszuSzoveg.Length; i++)
 {
-	Console.WriteLine("Elégtelen");
+	Console.Write(hosszuSzoveg[i]);
 }
-else if (pontszam <= 4)
+Console.WriteLine();
+
+// nézzük meg van-e a bekért szövegben magánhangzó, ha igen--> írjuk ki hogy van és hogy hány db
+Console.WriteLine("adj merg egy szoveget");
+string sz100 = Console.ReadLine();
+int db = 0;
+for (int i = 0; i < sz100.Length; i++)
 {
-	Console.WriteLine("Elégséges");
+	if(    sz100[i]=='a' 
+		|| sz100[i]=='e' 
+		|| sz100[i]=='i' 
+		|| sz100[i]=='u' 
+		|| sz100[i]=='o')
+	{
+		db++;
+	}
 }
-else if (pontszam <= 6)
+if (db > 0)
 {
-	Console.WriteLine("Közepes");
-}
-else if (pontszam <= 8)
-{
-	Console.WriteLine("jó");
-}
-else
-{
-	Console.WriteLine("jeles");
+	Console.WriteLine("van magánhangzó benne");
+	Console.WriteLine(db);
 }
 
-// tizes szorzótábla
-
-for (int i = 1; i <= 10; i++)
+// a bekért szövegből a magánhanzókat cseréljük le i-re, pl kerekpar-->kirikpir
+Console.WriteLine("adj merg egy szoveget");
+string sz101 = Console.ReadLine();
+for (int i = 0; i < sz101.Length; i++)
 {
-	Console.WriteLine($"{i}x10={i * 10}");
+	if (sz101[i] == 'a'
+		|| sz101[i] == 'e'
+		|| sz101[i] == 'u'
+		|| sz101[i] == 'o')
+	{
+		Console.Write('i');
+	}
+	else
+	{
+		Console.Write(sz101[i]);
+	}
 }
+
+// alakítsuk a keresztneveünket nagybetűssé
+string nev= "benjamin";
+for (int i = 0; i < nev.Length; i++)
+{
+	Console.Write((char)(nev[i]-32));
+}
+
 
 Console.ReadKey();
 ```
