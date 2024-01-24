@@ -1,184 +1,238 @@
 ```c#
-// dolgozat témája: [karakterek/ASCII, string, mint tömb]
-
-// karakter típusból hogy nyerem ki az ASCII kódot? 
-// (int)
-char karakter = 'b';
-Console.WriteLine((int)karakter); // 98
-Console.WriteLine(karakter); // b
-
-// "ASCII" kódból, hogy nyerem ki a karaktert?
-// (char)
-int asciiAzonosito = 97;
-Console.WriteLine(asciiAzonosito); // 97
-Console.WriteLine((char)asciiAzonosito); // a
-
-// string, mint tömb-------------------------------------------
-// a string pár fontosabb fulajdonsága
-string alma = "alma";
-Console.WriteLine(alma[0]); // első karakter
-Console.WriteLine(alma[alma.Length-1]); // utolsó kar.
-
-// járjuk körbe az alma változó karaktereit, és írassuk ki
-// karakterenkét a konzolra
-for (int i = 0; i < alma.Length; i++)
+static void Main(string[] args)
 {
-	Console.Write(alma[i]);
+	// string gyakorlás
+	feladat1();
+	// üzenet tikosítás és visszafejtés
+	feladat2();
+	// mátrixok
+	feladat3();
+	// vektorok
+	feladat4();
+	// közös elemek
+	feladat5();
+	// kisebb vektor gyak fel
+	feladat6();
+	Console.ReadKey();
 }
-Console.WriteLine();
 
-// járjuk ugyan ezt a változót körbe
-// viszont hátulról előre haladva
-for (int i = alma.Length - 1; i >= 0; i--)
+private static void feladat6()
 {
-	Console.Write(alma[i]);
-}
-Console.WriteLine();
-
-// melyik indexen található az 'l'
-// ha -1en marad az azt jelenti, hogy nem volt találat
-int lIndex = -1; 
-// mennyi db 'l' betű van benne?
-// azt már számlálóval tudjuk megállapítani:
-int lDb = 0;
-for (int i = 0; i < alma.Length; i++)
-{
-	if (alma[i] == 'l') 
+	// tölsön fel egy int típusú tömböt/vektort random számokkal,
+	// annyi elemmelű legyen a tömb, amennyit a konzolban megadok
+	Random r = new Random();
+	int[] elemek = new int[Convert.ToInt32(Console.ReadLine())];
+	for (int i = 0; i < elemek.Length; i++)
 	{
-		// ha van találat ezek történnek
-		lIndex = i;
-		lDb++;
+		elemek[i] = r.Next(100) + 1;
 	}
 }
-Console.WriteLine(lDb); // kiírjuk mennyi db 'l' volt benne
-// (eldöntés tétele)
-if (lIndex == -1)
+
+private static void feladat5()
 {
-	Console.WriteLine("nincs benne l");
-}
-else
-{
-	Console.WriteLine($"Van benne, méghozzá: {lIndex}. indexen");
+	string sz1 = "kerítés";
+	string sz2 = "egér";
+	// írassuk ki a közös elemeket (karaktereket)
+	// és hogy hány db közös elem volt?
+
+	// A közös elemeket egy különálló tömbben tárolja le,
+	// a kérdésekre a választ ebből a dedikált tömbböl nyerje ki
+
+	// ebbe gyűjtjük a közös elemeket ami a e,é,r lesz nagy valószínűséggel
+	char[] egyezoElemek = new char[sz2.Length]; // 4 karakter
+
+	// körbejárjuk a 'kerítés' minden elemét (karaktert)
+	for (int i = 0; i < sz1.Length; i++)
+	{
+		// körbe járjuk az 'egér' elemét
+		for (int j = 0; j < sz2.Length; j++)
+		{
+			// mindig összevetjük a kerítés adott karakterét az összes sz2 változó karakterével,
+			// pl a 'k'-t, ha van találat akkor pl a 'k'-t bele helyezzük
+			// a gyűjtő tömbbe, ahol a közös elemek lesznek
+			if (sz1[i] == sz2[j])
+			{
+				// egyezőElemekhez hozzáadni, mert van találat
+				//egyezoElemek;
+
+				// megkeressük, hogy milyen indexre helyezhetünk
+				// értéket a gyűjtő tömbben, hogy hol nincs még érték
+				int nullakSzama = 0;
+				for (int k = 0; k < egyezoElemek.Length; k++)
+				{
+					if (egyezoElemek[k] == 0)
+					{
+						nullakSzama++;
+					}
+				}
+				int index = egyezoElemek.Length - nullakSzama;
+
+				// bele helyezzük a közös elemet
+				if (index != egyezoElemek.Length)
+				{
+					egyezoElemek[index] = sz1[i];
+				}
+			}
+		}
+	}
+	// kilistázom a közös elemeket
+	for (int i = 0; i < egyezoElemek.Length; i++)
+	{
+		Console.WriteLine($"{egyezoElemek[i]} ---> {(int)egyezoElemek[i]}");
+	}
+	// megnézem hány db közös elem van, ahol 0 érték van ott nincs karakter(közös elem)
+	int nemNulla = 0;
+	for (int k = 0; k < egyezoElemek.Length; k++)
+	{
+		if (egyezoElemek[k] != 0)
+		{
+			nemNulla++;
+		}
+	}
+	Console.WriteLine($"{nemNulla} db közös karakter van a {sz1} és az {sz2}-ben");
 }
 
-// készítsünk monogrammot: kiss pista-->K.P.
-string nev = "kiss pista";
-Console.Write($"{(char)(nev[0] - 32)}.");
-for (int i = 0; i < nev.Length; i++)
+private static void feladat2()
 {
-	if(nev[i]==' ')
-	{
-		Console.Write($"{(char)(nev[i+1] - 32)}.");
-	}
+	string eredetiUzenet = "ALMA LEESETT A FÁROL DE NEM TÖRT EL";
+	string titkositottUzenet = titkositas(eredetiUzenet, 25);
+	string visszafejtettUznet = visszafejtes(titkositottUzenet, 25);
+	Console.WriteLine(eredetiUzenet);
+	Console.WriteLine(titkositottUzenet);
+	Console.WriteLine(visszafejtettUznet);
 }
-Console.WriteLine();
 
-// minden második karakter nagybetűs legyen
-string sz1 = "abrakadabra";
-for (int i = 0; i < sz1.Length; i++)
+private static void feladat4()
 {
-	if (i % 2 == 0)
+	// 1 dimenziós tömbök, vektorok 
+	
+	// töltsünk fel egy szekrény string típusú 5 elemű tömböt/vektort
+	// az adatokat konzolról kérjük be
+	string[] szekreny = new string[5];
+	for (int i = 0; i < szekreny.Length; i++)
 	{
-		Console.Write(sz1[i]);
+		Console.Write("Add meg mit helyezzek a szekrenybe: ");
+		szekreny[i] = Console.ReadLine();
 	}
-	else
-	{
-		Console.Write((char)(sz1[i]-32));
-	}
-}
-Console.WriteLine();
 
-// minden karakterének az ASCII értékét jelenítsük meg,
-// kiíratva egymás mellé szóközzel elválasztva
-string sz2 = "bela";
-for (int i = 0; i < sz2.Length; i++)
-{
-	Console.Write($"{(int)sz2[i]} ");
-}
-Console.WriteLine();
+	// listázzuk a szekrény tartalmát
+	Console.WriteLine("A szekreny tartalma:");
+	for (int i = 0; i < szekreny.Length; i++)
+	{
+		Console.WriteLine(szekreny[i]);
+	}
 
-// minden - (kötőjel) --> : (kettőspont)-ra
-// cseréljünk ki kiíratáskor
-// 6C-A6-77-44-C8-EA
-// 6C:A6:77:44:C8:EA
-string mac = "6C-A6-77-44-C8-EA";
-for (int i = 0; i < mac.Length; i++)
-{
-	if (mac[i] == '-')
-	{
-		Console.Write(':');
-	}
-	else
-	{
-		Console.Write(mac[i]);
-	}
-}
-Console.WriteLine();
+	//---------------------------------------------
 
-// maximum értéket (karaktert) találjuk meg
-// (ami az abc kezdőbetűjétől a legtávolabb van,
-// mert annak a legnagyobb az ASCII kódbéli értéke is egyben)
-string sz4 = "holnaputan";
-int max = sz4[0];
-for (int i = 1; i < sz4.Length; i++)
-{
-	if (sz4[i] > max)
+	// töltsünk fel egy 20 elemű int tömböt/veltort
+	// [1,100]-béli random számokkal
+	Random random = new Random();
+	int[] vektor = new int[20];
+	for (int i = 0; i < vektor.Length; i++)
 	{
-		max = sz4[i];
+		vektor[i] = random.Next(100) + 1; //[1,100]
+	}
+	
+	// írassuk ki az értékeket
+	for (int i = 0; i < vektor.Length; i++)
+	{
+		Console.WriteLine(vektor[i]);
 	}
 }
-Console.WriteLine($"max: {(char)max}");
 
-// indexekkel határozzuk meg a legnagyobb karaktert
-// ez kicsit jobb megoldás mert nem csak, hogy a maximum értékét
-// tudjuk lehivatkozni, de a konkrét helyét a szövegben is megmutatja
-int maxIndex = 0;
-for (int i = 0; i < sz4.Length; i++)
+private static void feladat3()
 {
-	if (sz4[i] > sz4[maxIndex])
-	{
-		maxIndex = i;
-	}
-}
-Console.WriteLine($"{sz4[maxIndex]}, amely a {maxIndex}.-en van");
+	// matrix--> 2 dim tömb
+	// - van szélessége, magassága
+	// - táblázatként lehet értelmezni
 
-// szóközök mentén sortörés
-string felh = Console.ReadLine();
-for (int i = 0; i < felh.Length; i++)
-{
-	if(felh[i]==' ')
+	// kezdeti értékkel létrehozott mátrix, ilyenkor nem kell megadni
+	// kötelezően, hogy mennyi a szélessége és magassága
+	int[,] matrix = new int[,]
 	{
-		Console.WriteLine();
-	}
-	else
-	{
-		Console.Write(felh[i]);
-	}
-}
-Console.WriteLine();
+		{ 421, 45, 54, 6},
+		{ 23, 55, 40, 8},
+		{ 66, 88, 21, 9}
+	};
 
-// ugyan az mint az előző, csak fordított sorrendben
-for (int i = felh.Length - 1; i >= 0; i--)
-{
-	if (felh[i] == ' ')
-	{
-		Console.WriteLine();
-	}
-	else
-	{
-		Console.Write(felh[i]);
-	}
-}
-Console.WriteLine();
+	// 66-ot azonosítása:
+	Console.WriteLine(matrix[2, 0]);
+	// 54-es érték azonosítása
+	Console.WriteLine(matrix[0, 2]);
 
-// döntsük el, hogy a megadott karakter az szám-e?
-char ascii = '7';
-if(ascii>=48 && ascii <= 57)
-{
-	Console.WriteLine("szám a karakter");
+	// ahhoz, hogy a mátrix elemeit körbejárjuk, kettő forciklust kell egymásba ágyazni
+	// a külsp a sorokat kezeli a belső az adott sor elemeit hivatkozza le
+	// GetLength(0)-->a sorokat hivatkozzuk le
+	// GetLength(1)-->az oszlopokat hivatkozzuk le
+	for (int i = 0; i < matrix.GetLength(0); i++)
+	{
+		for (int j = 0; j < matrix.GetLength(1); j++)
+		{
+			Console.WriteLine(matrix[i, j]); // sor, oszlop
+		}
+	}
+	
+	// mátrix feltöltése
+	Random random = new Random();
+	// nincs kezdeti értékek kapcsos zárójel által megadva, ergó-->
+	// nekünk kell megadni egyből a sorok számát (3), és az oszlopok számát(5)
+	int[,] matrix2 = new int[3, 5];
+	for (int i = 0; i < matrix2.GetLength(0); i++)
+	{
+		for (int j = 0; j < matrix2.GetLength(1); j++)
+		{
+			matrix2[i, j] = random.Next(100) + 1; //[1,100] random
+		}
+	}
+
+	// mátrix elemeinek kiíratása
+	for (int i = 0; i < matrix2.GetLength(0); i++)
+	{
+		for (int j = 0; j < matrix2.GetLength(1); j++)
+		{
+			Console.WriteLine(matrix2[i, j]);
+		}
+	}
 }
-else
+
+private static string visszafejtes(string titkositottUzenet, int eltolas)
 {
-	Console.WriteLine("nem szám");
+	string visszafejtettUzenet = "";
+	for (int i = 0; i < titkositottUzenet.Length; i++)
+	{
+		visszafejtettUzenet += (char)(titkositottUzenet[i] + eltolas);
+	}
+	return visszafejtettUzenet;
+}
+
+private static string titkositas(string eredetiUzenet, int eltolas)
+{
+	string titkositottUzenet = "";
+
+	for (int i = 0; i < eredetiUzenet.Length; i++)
+	{
+		titkositottUzenet+= (char)(eredetiUzenet[i] - eltolas);
+	}
+
+	return titkositottUzenet;
+}
+
+private static void feladat1()
+{
+	// írassuk ki a második szót
+	string mondat = "Géza kék az ég";
+	int szokozSzamlalo = 0;
+	for (int i = 0; i < mondat.Length; i++)
+	{
+		if (mondat[i] == ' ')
+		{
+			szokozSzamlalo++;
+		}
+		if (szokozSzamlalo > 0 && szokozSzamlalo < 2 && mondat[i] != ' ')
+		{
+			Console.Write(mondat[i]);
+		}
+	}
+	Console.WriteLine();
 }
 ```
