@@ -1,12 +1,7 @@
 ```c#
 static void Main(string[] args)
 {
-	int[] tomb = new int[] { 3, 2, 10, 4 };
-	osszegzes(tomb);
-	megszamlalas(tomb);
-	eldontes(tomb);
-	matrixIsmetles();
-	// feladat
+	matrixIsm();
 	feladat1();
 	feladat2();
 	Console.ReadKey();
@@ -14,72 +9,174 @@ static void Main(string[] args)
 
 private static void feladat2()
 {
-	string szoveg = "CASIC nevu kinai ceg megdonti a vasutipar rekordjait. Keszul az 1000km/h-s vonat.";
+	string[] gyumolcsok = new string[] 
+	{ 
+		"alma", 
+		"korte", 
+		"banan", 
+		"narancs", 
+		"szilva", 
+		"Mandarin" 
+	};
+
+	// Mennyi legalább 5 karakteres szó van benne
+	int szamlalo = 0;
+	for (int i = 0; i < gyumolcsok.Length; i++) if (gyumolcsok[i].Length >= 5) szamlalo++;
+	Console.WriteLine(szamlalo);
+
+	// van-e benne páros karakterhosszú szó
+	bool vanE = false;
+	for (int i = 0; vanE==false && i < gyumolcsok.Length; i++) 
+	{
+		if (gyumolcsok[i].Length % 2 == 0) vanE = true;
+	}
+	Console.WriteLine((vanE?"van":"nincs")+ "benne páros karakterhosszú szó");
+
+	// van-e olyan szó amely nagybetűvel kezdődik
+	bool vanE2 = false;
+	for (int i = 0; vanE2 == false && i < gyumolcsok.Length; i++)
+	{
+		if (gyumolcsok[i][0] >='A' && gyumolcsok[i][0]<='Z') vanE2 = true;
+	}
+	Console.WriteLine((vanE2 ? "van" : "nincs") + "benne olyan szó amely nagybetűvel kezdődik");
+
+	// van-e olyan szó amely tartalmaz 'd'-t
+	bool vanE3 = false;
+	for (int i = 0; vanE3==false && i < gyumolcsok.Length; i++)
+	{
+		string gyumolcs = gyumolcsok[i];
+		for (int j = 0; vanE3==false && j < gyumolcs.Length; j++)
+		{
+			if (gyumolcs[j] == 'd') vanE3 = true;
+		}
+	}
+	Console.WriteLine((vanE3?"van":"nincs")+ " olyan szó amely tartalmaz 'd'-t");
+
+	// melyik a legtöbb magánhangzót tartalmazó szó
+	int maxIndex = 0;
+	for (int i = 0; i < gyumolcsok.Length; i++)
+	{
+		if (mennyiMaganhangzo(gyumolcsok[i]) > mennyiMaganhangzo(gyumolcsok[maxIndex]))
+		{
+			maxIndex = i;
+		}
+	}
+	Console.WriteLine(gyumolcsok[maxIndex]);
+	// van-e szilva a tömbben.
+	bool vanE4 = false;
+	for (int i = 0; vanE4==false && i < gyumolcsok.Length; i++)
+	{
+		if (gyumolcsok[i] == "szilva") vanE4 = true;
+	}
+	Console.WriteLine((vanE4 ? "van" : "nincs") + " benne szilva");
+}
+
+private static int mennyiMaganhangzo(string gyumolcs)
+{
+	int szamlalo = 0;
+	for (int j = 0; j < gyumolcs.Length; j++)
+	{
+		if (
+			gyumolcs[j] == 'a' ||
+			gyumolcs[j] == 'e' ||
+			gyumolcs[j] == 'i' ||
+			gyumolcs[j] == 'u' ||
+			gyumolcs[j] == 'o'
+		  ) szamlalo++;
+	}
+	return szamlalo;
+}
+
+private static void feladat1()
+{
+	string szoveg = "CASIC nevu kinai ceg megdonti a vasutipar rekordjait. " +
+		"Keszul az 1000km/h-s vonat.";
 	// mennyi db betű van benne (kisbetű/nagybetű)
 	// mennyi db magánhangzó van benne
 	// mennyi db mondatrészből áll
 	// mennyi db szóból áll
-	// hány %-a szám a teljes szövegnek
+	// hány %-a szám a teljes szövegnek, 2 tizedesre kerekítés
 	// VAN-e benne kisbetű
 	// VAN-e benne /-jel
 	// írassa ki a szöveget kisbetűsen!
+	// -------------------------------------------------------------------------
+	// mennyi db betű van benne (kisbetű/nagybetű)
 	int betuDarab = 0;
 	for (int i = 0; i < szoveg.Length; i++)
 	{
-		if ((szoveg[i] >= 'A' && szoveg[i] <= 'Z') || (szoveg[i] >= 'a' && szoveg[i] <= 'z')) betuDarab++;
+		if ((szoveg[i] >= 'A' && szoveg[i] <= 'Z') 
+			|| (szoveg[i] >= 'a' && szoveg[i] <= 'z')) betuDarab++;
 	}
 	Console.WriteLine(betuDarab);
-}
-
-/// <summary>
-/// iskolai csoportverseny volt. 2 10 fős csoport van. 
-/// töltse fel [1,10]-ban az elemeket. és válaszoljon az alábbi kérdésekre
-/// ------------------------------------------
-/// melyik csoport szerzett több pontot (összegzés tétele)
-/// mennyi tanuló szerzett az 1. csoportból 1 pontot (megszámlálás)
-/// volt-e a kettes csoportban olyan aki 10 pontot szerzett (eldöntés)
-/// </summary>
-private static void feladat1()
-{
-	int[,] csapatok = new int[2, 10];
-	Random r = new Random();
-	for (int i = 0; i < csapatok.GetLength(0); i++)
+	// mennyi db magánhangzó van benne
+	int maganhangzoDb = 0;
+	for (int i = 0; i < szoveg.Length; i++)
 	{
-		for (int j = 0; j < csapatok.GetLength(1); j++) csapatok[i, j] = r.Next(10) + 1;
-	}
-	// elso
-	int elsoCsopOsszeg = 0;
-	int masodikCsopOsszeg = 0;
-	for (int i = 0; i < csapatok.GetLength(0); i++)
-	{
-		for (int j = 0; j < csapatok.GetLength(1); j++)
+		if(
+		   szoveg[i]=='a' || szoveg[i]=='e' || szoveg[i]=='i' || szoveg[i]=='o' || szoveg[i] == 'u'
+			||
+		   szoveg[i] == 'A' || szoveg[i] == 'E' || szoveg[i] == 'I' || szoveg[i] == 'O' || szoveg[i] == 'U'
+		)
 		{
-			if (i == 0) elsoCsopOsszeg += csapatok[i, j];
-			else masodikCsopOsszeg += csapatok[i, j];
+			maganhangzoDb++;
 		}
 	}
-	Console.WriteLine((masodikCsopOsszeg > elsoCsopOsszeg) ? "2. nyert" : (elsoCsopOsszeg > masodikCsopOsszeg) ? "1. nyert" : "döntetlen");
 
-	// masodik
-	int szamlalo = 0;
-	for (int i = 0; i < csapatok.GetLength(1); i++) if (csapatok[0, i] == 1) szamlalo++;
+	// mennyi db mondatrészből áll
+	//for (int i = 0, darab = 0; i < szoveg.Length; i++) if (szoveg[i] == ' ') Console.WriteLine((i ==szoveg.Length-1?(++darab).ToString():(++darab).ToString())); 
+	int pontszamlalo = 0;
+	for (int i = 0; i < szoveg.Length; i++)
+	{
+		if (szoveg[i] == '.') pontszamlalo++;
+	}
+	Console.WriteLine(pontszamlalo);
 
-	// harmadik
+	// mennyi db szóból áll
+	int szokozSzamlalo = 0;
+	for (int i = 0; i < szoveg.Length; i++)
+	{
+		if (szoveg[i] == ' ') szokozSzamlalo++;
+	}
+	Console.WriteLine(++szokozSzamlalo);
+
+	// hány %-a szám a teljes szövegnek, 2 tizedesre kerekítés
+	int szamSzamlalo = 0;
+	int osszKarakter = szoveg.Length;
+	for (int i = 0; i < szoveg.Length; i++)
+	{
+		if (szoveg[i] >= '0' && szoveg[i] <= '9') szamSzamlalo++;
+	}
+	Console.WriteLine(Math.Round((double)szamSzamlalo/osszKarakter,2));
+
+	// VAN-e benne kisbetű
 	bool vanE = false;
-	for (int i = 0; vanE == false && i < csapatok.GetLength(1); i++) if (csapatok[1, i] == 10) vanE = true;
-	Console.WriteLine(vanE ? "van" : "nincs");
+	for (int i = 0; vanE ==false && i<szoveg.Length; i++) 
+		if (szoveg[i] >= 'a' && szoveg[i] <= 'z') vanE = true;
+	Console.WriteLine((vanE ? "van" : "nincs") + " benne kisbetű");
+
+	// VAN - e benne / -jel
+	bool vanE2 = false;
+	for (int i = 0; vanE2 == false && i < szoveg.Length; i++) if (szoveg[i] == '/') vanE2 = true;
+	Console.WriteLine((vanE2 ? "van" : "nincs") + " benne / jel");
+
+	// írassa ki a szöveget kisbetűsen!
+	for (int i = 0; i < szoveg.Length; i++)
+	{
+		Console.Write((szoveg[i] >= 'A' && szoveg[i] <= 'Z')? (char)(szoveg[i] + 32): szoveg[i]);
+	}
 }
 
-private static void matrixIsmetles()
+
+private static void matrixIsm()
 {
-	int[,] matrix = new int[3, 5];
+	int[,] matrix = new int[3, 4];
+	// feltöltés random számokkal
 	Random r = new Random();
-	// feltölteni
-	for (int i = 0; i < matrix.GetLength(0); i++)
+	for (int i = 0; i < matrix.GetLength(0); i++) //3
 	{
-		for (int j = 0; j < matrix.GetLength(1); j++)
+		for (int j = 0; j < matrix.GetLength(1); j++) // 4
 		{
-			matrix[i, j] = r.Next(10); //[0,9]
+			matrix[i, j] = r.Next(10); // [0,9]
 		}
 	}
 	// kiíratás
@@ -87,48 +184,9 @@ private static void matrixIsmetles()
 	{
 		for (int j = 0; j < matrix.GetLength(1); j++)
 		{
-			Console.Write($"{matrix[i, j]} "); // egy sor elemeit egymás mellé helyezi
+			Console.Write($"{matrix[i, j]} "); // i. sor j. elme
 		}
-		Console.WriteLine(); // amikor egy sort kiíratott, akkor sort tör
+		Console.WriteLine();
 	}
-}
-
-private static void eldontes(int[] tomb)
-{
-	bool vanE = false;
-	int i = 0;
-	while (vanE==false && i<tomb.Length)
-	{
-		if (tomb[i] == 2)
-		{
-			vanE = true;
-		}
-		i++;
-	}
-	//  for (int i = 0; vanE==false && i<tomb.Length; i++) if (tomb[i] == 2) vanE = true;
-	Console.WriteLine(vanE?"van":"nincs");
-}
-
-private static void megszamlalas(int[] tomb)
-{
-	int szamlalo = 0;
-	for (int i = 0; i < tomb.Length; i++)
-	{
-		if (tomb[i] % 2 == 0)
-		{
-			szamlalo++;
-		}
-	}
-	Console.WriteLine(szamlalo);
-}
-
-private static void osszegzes(int[] tomb)
-{
-	int osszeg = 0;
-	for (int i = 0; i < tomb.Length; i++)
-	{
-		osszeg += tomb[i];
-	}
-	Console.WriteLine(osszeg);
 }
 ```
