@@ -1,62 +1,61 @@
 ```c#
 static void Main(string[] args)
 {
-	binToDec();
-	DecToBin1();
-	DecToBin2();
-	// ne ezzel oldjátok meg, de ilyen
-	// egyszerűbb megoldások is vannak mint ez
-	Console.WriteLine("11101", 10);
+	matrix();
+	matrixKomplexGyak();
 	Console.ReadKey();
 }
 
-private static void DecToBin2()
+private static void matrixKomplexGyak()
 {
-	int dec = 29;
-	string bin = "";
-	while (dec!=0)
+	/*
+	 * 14 fős csoportban a tanulók minden hónapban írtak egy dogát
+	 * eltelt 4 hónap. Minden tanuló kapott [1,5]-ban egy-egy jegyet.
+	 * 
+	 * - mennyi a tanulók átlaga
+	 * - mennyi az osztályátlag
+	 * - mennyi tanuló áll bukásra (1.6 alatt)
+	 * - mennyi tanulónak van CSAK 1-es jegye
+	 * - mennyi tanuló van az osztályátlag alatt
+	 * 
+	 * - van-e olyan tanuló aki ötösre áll (4.6 vagy felette)
+	 * - van-e olyan tanuló aki csak 3-ast szerzett
+	 * - van-e olyan tanuló akinek az első és az utolsó jegye megegyezik
+	 */
+	int[,] tanulok = new int[14, 4];
+	Random r = new Random();
+	for (int i = 0; i < tanulok.GetLength(0); i++)
 	{
-		bin += dec % 2;
-		dec /= 2;
+		for (int j = 0; j < tanulok.GetLength(1); j++)
+		{
+			tanulok[i, j] = r.Next(5) + 1; // [1,5]
+		}
 	}
-	for (int i = bin.Length - 1; i >= 0; i--)
+	// mennyi a tanulók átlaga
+	for (int i = 0; i < tanulok.GetLength(0); i++) //14
 	{
-		Console.Write(bin[i]);
+		int osszJegy = 0;
+		for (int j = 0; j < tanulok.GetLength(1); j++)
+		{
+			osszJegy += tanulok[i, j];
+		}
+		double atlag = osszJegy / (double)tanulok.GetLength(1);
+		Console.WriteLine($"{i + 1}. tanuló: {atlag:0.00}");
 	}
 }
 
-private static void DecToBin1()
+private static void matrix()
 {
-	int dec = 33;
-	string bin = "";
-	int hatvany = 0;
-	while (Math.Pow(2, hatvany)<=dec)hatvany++ ;
-	hatvany--;
-	int osszeg = 0;
-	for (int i = hatvany; i >= 0; i--)
+	int[,] matrix = new int[2, 4];
+	Random r = new Random();
+	for (int i = 0; i < matrix.GetLength(0); i++)
 	{
-		if (osszeg + Math.Pow(2, i) <= dec)
+		for (int j = 0; j < matrix.GetLength(1); j++)
 		{
-			osszeg += (int)Math.Pow(2, i);
-			bin += "1";
+			matrix[i, j] = r.Next(10); //[0,9]
+			Console.Write($"{matrix[i,j]} ");
 		}
-		else
-		{
-			bin += '0';
-		}
+		Console.WriteLine();
 	}
-	Console.WriteLine(bin);
-}
-
-private static void binToDec()
-{
-	string bin = "11101";
-	int dec = 0;
-	int hatvany = bin.Length - 1;
-	for (int i = 0; i < bin.Length; i++, hatvany--)
-	{
-		if (bin[i] == '1') dec += (int)Math.Pow(2, hatvany); // 4-->3-->2-->1-->0
-	}
-	Console.WriteLine(dec);
 }
 ```
