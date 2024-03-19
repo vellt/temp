@@ -1,93 +1,46 @@
 ```c#
-static void Main(string[] args)
-{
-	Console.WriteLine("1. Pi értéke");
-	Console.WriteLine("2. Pi kirajzolása");
-	Console.WriteLine("3. Pi kirajzolása 2");
-	Console.WriteLine("--------------------");
-	Console.Write("Menu: ");
-	switch (Convert.ToInt32(Console.ReadLine()))
-	{
-		case 1:
-			piErteke();
-			break;
-		case 2:
-			piKirajzol();
-			break;
-		case 3:
-			piKirajzol2();
-			break;
-	}
-	Console.ReadKey();
-}
+// egysorosba [MŰKÖDIK]
+File.ReadAllText("olvass_be.txt").Split(' ').ToList().Select(x =>new{ismetlesSzam=(x[0]=='n')?1:Convert.ToInt32(x[0].ToString()),ismetloKarakter=(x[0]=='n')?'\n':string.Join("", x.Skip(1))=="sp"?' ':string.Join("",x.Skip(1))=="bS"?'\\':string.Join("", x.Skip(1))=="sQ"?'\'':x[1]}).ToList().ForEach(x =>{for(int i=0;i<x.ismetlesSzam;i++) Console.Write(x.ismetloKarakter);});
 
-private static void piKirajzol2()
+Console.WriteLine('\n');
+
+// többsorosba
+string szoveg= File.ReadAllText("olvass_be.txt");
+szoveg += " ";
+string parancs = "";
+for (int i = 0; i < szoveg.Length; i++)
 {
-	Console.WriteLine("--------------------\n");
-	string szoveg = File.ReadAllText("num3.txt");
-	bool talalat = false;
-	string ertek = "";
-	for (int i = 0; i < szoveg.Length; i++)
+	if(szoveg[i]!=' ')
 	{
-		if (szoveg[i] == '{')
+		parancs += szoveg[i];
+	}
+	else
+	{
+		if (parancs[0] == 'n')
 		{
-			ertek = "";
-			talalat = true;
-		}else if (szoveg[i] == '}')
-		{
-			talalat = false;
-			if (ertek == "B")
-			{
-				Console.Write(Math.Round(22/7.0,2));
-			}
-			else if(ertek=="0")
-			{
-				Console.WriteLine();
-			}
-			else
-			{
-				// szám
-				int szam = Convert.ToInt32(ertek);
-				for (int j = 0; j < szam; j++)
-				{
-					Console.Write(' ');
-				}
-			}
-		}
-		else if (talalat == true)
-		{
-			ertek += szoveg[i];
+			Console.WriteLine();
 		}
 		else
 		{
-			Console.Write(szoveg[i]);
+			// akkor valószínűleg egy számmal kezdődik
+			int ismetlesSzam = Convert.ToInt32(parancs[0].ToString());
+			string rovidites = "";
+			char kiir = parancs[1];
+			for (int j = 1; j < parancs.Length; j++)
+			{
+				rovidites += parancs[j];
+			}
+			if (rovidites == "sp") kiir = ' ';
+			else if (rovidites == "bS") kiir = '\\';
+			else if (rovidites == "sQ") kiir = '\'';
+			for (int j = 0; j < ismetlesSzam; j++)
+			{
+				Console.Write(kiir);
+			}
 		}
+		parancs = "";
 	}
+   
 }
-
-private static void piKirajzol()
-{
-	Console.WriteLine("--------------------\n");
-	string szoveg = File.ReadAllText("num1.txt");
-	for (int i = 0; i < szoveg.Length; i++)
-	{
-		if (szoveg[i] == 'K') Console.Write(" ");
-		else if (szoveg[i] == 'B') Console.Write(Math.Round(22/7.0,2));
-		else if (szoveg[i] == 'H') Console.Write("  ");
-		else if (szoveg[i] == 'P') Console.Write("   ");
-		else if (szoveg[i] >= '0' && szoveg[i] <= '9') Console.Write(szoveg[i]);
-		else if (szoveg[i] == 'Q') Console.WriteLine();
-	}
-}
-
-private static void piErteke()
-{
-	Console.WriteLine("--------------------\n");
-	string szoveg = File.ReadAllText("num1.txt");
-	for (int i = 0; i < szoveg.Length; i++)
-	{
-		if (szoveg[i] == 'B') Console.Write(Math.Round(22 / 7.0, 2));
-		else if (szoveg[i] > '0' && szoveg[i] < '9') Console.Write(szoveg[i]);
-	}
-}
+Console.ReadKey();
 ```
