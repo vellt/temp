@@ -1,46 +1,45 @@
 ```c#
-// egysorosba [MŰKÖDIK]
-File.ReadAllText("olvass_be.txt").Split(' ').ToList().Select(x =>new{ismetlesSzam=(x[0]=='n')?1:Convert.ToInt32(x[0].ToString()),ismetloKarakter=(x[0]=='n')?'\n':string.Join("", x.Skip(1))=="sp"?' ':string.Join("",x.Skip(1))=="bS"?'\\':string.Join("", x.Skip(1))=="sQ"?'\'':x[1]}).ToList().ForEach(x =>{for(int i=0;i<x.ismetlesSzam;i++) Console.Write(x.ismetloKarakter);});
+/*
+ Kiválasztás tétele:
+eldöntés tétele annyival kiegészítve, hogy amennyiben van/talált olyan elemet, ami a feltételnek megfelel akkor megadja az indexét
+ */
 
-Console.WriteLine('\n');
-
-// többsorosba
-string szoveg= File.ReadAllText("olvass_be.txt");
-szoveg += " ";
-string parancs = "";
-for (int i = 0; i < szoveg.Length; i++)
+// 10 egész számot generáljon [-50, 50]-ban
+// mondja meg, hogy van e benne pozitív szám
+// amennyiben igen mondja meg annak az indexét
+Random r = new Random();
+int[] egeszSzamok = new int[10];
+for (int i = 0; i < egeszSzamok.Length; i++)
 {
-	if(szoveg[i]!=' ')
-	{
-		parancs += szoveg[i];
-	}
-	else
-	{
-		if (parancs[0] == 'n')
-		{
-			Console.WriteLine();
-		}
-		else
-		{
-			// akkor valószínűleg egy számmal kezdődik
-			int ismetlesSzam = Convert.ToInt32(parancs[0].ToString());
-			string rovidites = "";
-			char kiir = parancs[1];
-			for (int j = 1; j < parancs.Length; j++)
-			{
-				rovidites += parancs[j];
-			}
-			if (rovidites == "sp") kiir = ' ';
-			else if (rovidites == "bS") kiir = '\\';
-			else if (rovidites == "sQ") kiir = '\'';
-			for (int j = 0; j < ismetlesSzam; j++)
-			{
-				Console.Write(kiir);
-			}
-		}
-		parancs = "";
-	}
-   
+	egeszSzamok[i] = r.Next(101)-50;
 }
-Console.ReadKey();
+
+int index = -1;
+for (int i = 0; index==-1 && i < egeszSzamok.Length; i++)
+{
+	if(egeszSzamok[i]>=0)
+	{
+		index = i;
+	}
+}
+if (index != -1)
+{
+	Console.WriteLine("találtam pozitív számot");
+	Console.WriteLine(egeszSzamok[index]);
+}
+else
+{
+	Console.WriteLine("nincs benne pozitív szám");
+}
+
+// max/min kiválasztás
+// rendezetlen elemek (szám, karakter, szöveg) közül kiválasztjuk a legnagyobbat vagy a legkisebbet. 
+int maxIndex = 0;
+for (int i = 1; i < egeszSzamok.Length; i++)
+{
+	if (egeszSzamok[maxIndex] < egeszSzamok[i])
+	{
+		maxIndex = i;
+	}
+}
 ```
