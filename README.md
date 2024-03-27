@@ -1,45 +1,94 @@
 ```c#
-/*
- Kiválasztás tétele:
-eldöntés tétele annyival kiegészítve, hogy amennyiben van/talált olyan elemet, ami a feltételnek megfelel akkor megadja az indexét
- */
-
-// 10 egész számot generáljon [-50, 50]-ban
-// mondja meg, hogy van e benne pozitív szám
-// amennyiben igen mondja meg annak az indexét
-Random r = new Random();
-int[] egeszSzamok = new int[10];
-for (int i = 0; i < egeszSzamok.Length; i++)
+static void Main(string[] args)
 {
-	egeszSzamok[i] = r.Next(101)-50;
+	//dogaGyak();
+
+	// mátrix kezelés
+	int[,] matrix = new int[5, 5];
+	for (int i = 0; i < matrix.GetLength(0); i++)
+	{
+		for (int j = 0; j < matrix.GetLength(1); j++)
+		{
+			if (j % 5 == 0) Console.WriteLine();
+			Console.Write($"{matrix[i, j],3}");
+		}
+	}
+	// rajzoljuk ki csak bizonyos elemit a mátrixnak a megadott minták alapján
+	Console.WriteLine("\n---------------");
+	a(matrix);
+	Console.WriteLine("\n---------------");
+	b(matrix);
+	Console.ReadKey();
 }
 
-int index = -1;
-for (int i = 0; index==-1 && i < egeszSzamok.Length; i++)
+private static void b(int[,] matrix)
 {
-	if(egeszSzamok[i]>=0)
+	for (int i = 0; i < matrix.GetLength(0); i++)
 	{
-		index = i;
+		for (int j = 0; j < matrix.GetLength(1); j++)
+		{
+			if (j % 5 == 0) Console.WriteLine();
+			if (i == 0 || j==0 || i==4 || j==4) Console.Write($"{'-',3}");
+			else Console.Write($"{matrix[i, j],3}");
+		}
 	}
 }
-if (index != -1)
+
+private static void a(int[,] matrix)
 {
-	Console.WriteLine("találtam pozitív számot");
-	Console.WriteLine(egeszSzamok[index]);
-}
-else
-{
-	Console.WriteLine("nincs benne pozitív szám");
+	for (int i = 0; i < matrix.GetLength(0); i++)
+	{
+		for (int j = 0; j < matrix.GetLength(1); j++)
+		{
+			if (j % 5 == 0) Console.WriteLine();
+			if(j==2) Console.Write($"{matrix[i,j],3}");
+			else if (i == 2) Console.Write($"{matrix[i, j],3}");
+			else Console.Write($"{'-',3}");
+		}
+	}
 }
 
-// max/min kiválasztás
-// rendezetlen elemek (szám, karakter, szöveg) közül kiválasztjuk a legnagyobbat vagy a legkisebbet. 
-int maxIndex = 0;
-for (int i = 1; i < egeszSzamok.Length; i++)
+private static void dogaGyak()
 {
-	if (egeszSzamok[maxIndex] < egeszSzamok[i])
+	int[,] matrix = new int[12, 30];
+	Random r = new Random();
+	double osszAtlag = 0;
+	for (int honap = 0; honap < matrix.GetLength(0); honap++)
 	{
-		maxIndex = i;
+		int osszHomerseklet = 0;
+		for (int nap = 0; nap < matrix.GetLength(1); nap++)
+		{
+			matrix[honap, nap] = r.Next(26) - 15; //[-15,10]
+			osszHomerseklet += matrix[honap, nap];
+		}
+		double atlag = osszHomerseklet / 30.0;
+		osszAtlag += atlag;
 	}
+	double evesAtlag = osszAtlag / 12;
+	Console.WriteLine(osszAtlag);
+
+	bool van = false;
+	for (int honap = 0; van == false && honap < matrix.GetLength(0); honap++)
+	{
+		int osszHomerseklet = 0;
+		for (int nap = 0; nap < matrix.GetLength(1); nap++)
+		{
+			osszHomerseklet += matrix[honap, nap];
+		}
+		double atlag = osszHomerseklet / 30.0;
+		if (atlag < evesAtlag) van = true;
+	}
+	Console.WriteLine(van ? "van" : "nincs");
+
+	van = false;
+	for (int honap = 0; van == false && honap < matrix.GetLength(0); honap++)
+	{
+
+		for (int nap = 0; van == false && nap < matrix.GetLength(1); nap++)
+		{
+			if (matrix[honap, nap] == -2) van = true;
+		}
+	}
+	Console.WriteLine(van ? "van" : "nincs");
 }
 ```
