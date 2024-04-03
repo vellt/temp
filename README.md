@@ -1,94 +1,55 @@
 ```c#
-static void Main(string[] args)
+class Caesar 
 {
-	//dogaGyak();
-
-	// mátrix kezelés
-	int[,] matrix = new int[5, 5];
-	for (int i = 0; i < matrix.GetLength(0); i++)
+	public static string Titkositas(string uzenet)
 	{
-		for (int j = 0; j < matrix.GetLength(1); j++)
-		{
-			if (j % 5 == 0) Console.WriteLine();
-			Console.Write($"{matrix[i, j],3}");
-		}
+		string titkositott = "";
+		char[] abc = abcFeltolt();
+		for (int i = 0; i < uzenet.Length; titkositott += abc[karakterTitkositas(karakterIndex(uzenet[i++], abc))]);
+		return titkositott;
 	}
-	// rajzoljuk ki csak bizonyos elemit a mátrixnak a megadott minták alapján
-	Console.WriteLine("\n---------------");
-	a(matrix);
-	Console.WriteLine("\n---------------");
-	b(matrix);
-	Console.ReadKey();
-}
 
-private static void b(int[,] matrix)
-{
-	for (int i = 0; i < matrix.GetLength(0); i++)
+	public static string Visszafejtes(string uzenet)
 	{
-		for (int j = 0; j < matrix.GetLength(1); j++)
-		{
-			if (j % 5 == 0) Console.WriteLine();
-			if (i == 0 || j==0 || i==4 || j==4) Console.Write($"{'-',3}");
-			else Console.Write($"{matrix[i, j],3}");
-		}
+		string visszafejtett = "";
+		char[] abc = abcFeltolt();
+		for (int i = 0; i < uzenet.Length; visszafejtett += abc[karakterVisszafejtes(karakterIndex(uzenet[i++], abc))]);
+		return visszafejtett;
 	}
-}
 
-private static void a(int[,] matrix)
-{
-	for (int i = 0; i < matrix.GetLength(0); i++)
+	private static int karakterVisszafejtes(int x)
 	{
-		for (int j = 0; j < matrix.GetLength(1); j++)
-		{
-			if (j % 5 == 0) Console.WriteLine();
-			if(j==2) Console.Write($"{matrix[i,j],3}");
-			else if (i == 2) Console.Write($"{matrix[i, j],3}");
-			else Console.Write($"{'-',3}");
-		}
+		int maradek = (x - 3) % 26;
+		return maradek < 0 ? maradek + 26 : maradek;
+	}
+
+	private static int karakterTitkositas(int x)
+	{
+		return (x + 3) % 26;
+	}
+
+	private static int karakterIndex(char karakter, char[] abc)
+	{
+		int index = -1;
+		for (int i = 0; index == -1 && i < abc.Length; i++) if (karakter == abc[i]) index = i;
+		return index;
+	}
+
+	private static char[] abcFeltolt()
+	{
+		char[] temp = new char[26];
+		for (int i = 0; i < temp.Length; i++) temp[i] = (char)(65 + i);
+		return temp;
 	}
 }
 
-private static void dogaGyak()
+class Program
 {
-	int[,] matrix = new int[12, 30];
-	Random r = new Random();
-	double osszAtlag = 0;
-	for (int honap = 0; honap < matrix.GetLength(0); honap++)
+	static void Main(string[] args)
 	{
-		int osszHomerseklet = 0;
-		for (int nap = 0; nap < matrix.GetLength(1); nap++)
-		{
-			matrix[honap, nap] = r.Next(26) - 15; //[-15,10]
-			osszHomerseklet += matrix[honap, nap];
-		}
-		double atlag = osszHomerseklet / 30.0;
-		osszAtlag += atlag;
+		Console.WriteLine(Caesar.Titkositas("PLAY"));
+		Console.WriteLine(Caesar.Visszafejtes(Caesar.Titkositas("PLAY")));
+		Console.ReadKey();
 	}
-	double evesAtlag = osszAtlag / 12;
-	Console.WriteLine(osszAtlag);
-
-	bool van = false;
-	for (int honap = 0; van == false && honap < matrix.GetLength(0); honap++)
-	{
-		int osszHomerseklet = 0;
-		for (int nap = 0; nap < matrix.GetLength(1); nap++)
-		{
-			osszHomerseklet += matrix[honap, nap];
-		}
-		double atlag = osszHomerseklet / 30.0;
-		if (atlag < evesAtlag) van = true;
-	}
-	Console.WriteLine(van ? "van" : "nincs");
-
-	van = false;
-	for (int honap = 0; van == false && honap < matrix.GetLength(0); honap++)
-	{
-
-		for (int nap = 0; van == false && nap < matrix.GetLength(1); nap++)
-		{
-			if (matrix[honap, nap] == -2) van = true;
-		}
-	}
-	Console.WriteLine(van ? "van" : "nincs");
 }
 ```
